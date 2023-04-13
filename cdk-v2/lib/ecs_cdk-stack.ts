@@ -15,7 +15,8 @@ export class EcsCdkStack extends cdk.Stack {
 
     const githubUserName = new cdk.CfnParameter(this, "githubUserName", {
         type: "String",
-        description: "Github username for source code repository"
+        description: "Github username for source code repository",
+        default: "phimanic"
     })
 
     const githubRepository = new cdk.CfnParameter(this, "githubRespository", {
@@ -27,7 +28,7 @@ export class EcsCdkStack extends cdk.Stack {
     const githubPersonalTokenSecretName = new cdk.CfnParameter(this, "githubPersonalTokenSecretName", {
         type: "String",
         description: "The name of the AWS Secrets Manager Secret which holds the GitHub Personal Access Token for this project.",
-        default: "/aws-samples/amazon-ecs-fargate-cdk-v2-cicd/github/personal_access_token" 
+        default: "/my/github/token5" 
     })
     //default: `${this.stackName}`
 
@@ -118,8 +119,8 @@ export class EcsCdkStack extends cdk.Stack {
 
 
     const gitHubSource = codebuild.Source.gitHub({
-      owner: githubUserName.valueAsString,
-      repo: githubRepository.valueAsString,
+      owner: 'phimanic',
+      repo: 'amazon-ecs-fargate-cdk-v2-cicd-1',
       webhook: true, // optional, default: true if `webhookfilteres` were provided, false otherwise
       webhookFilters: [
         codebuild.FilterGroup.inEventOf(codebuild.EventAction.PUSH).andBranchIs('main'),
@@ -193,8 +194,8 @@ export class EcsCdkStack extends cdk.Stack {
     const nameOfGithubPersonTokenParameterAsString = githubPersonalTokenSecretName.valueAsString
     const sourceAction = new codepipeline_actions.GitHubSourceAction({
       actionName: 'github_source',
-      owner: githubUserName.valueAsString,
-      repo: githubRepository.valueAsString,
+      owner: 'phimanic',
+      repo: 'amazon-ecs-fargate-cdk-v2-cicd-1',
       branch: 'main',
       oauthToken: cdk.SecretValue.secretsManager(nameOfGithubPersonTokenParameterAsString),
       output: sourceOutput
