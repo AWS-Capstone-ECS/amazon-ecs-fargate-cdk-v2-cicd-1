@@ -22,13 +22,13 @@ export class EcsCdkStack extends cdk.Stack {
     const githubRepository = new cdk.CfnParameter(this, "githubRespository", {
         type: "String",
         description: "Github source code repository",
-        default: "amazon-ecs-fargate-cdk-v2-cicd" 
+        default: "amazon-ecs-fargate-cdk-v2-cicd-1" 
     })
 
     const githubPersonalTokenSecretName = new cdk.CfnParameter(this, "githubPersonalTokenSecretName", {
         type: "String",
         description: "The name of the AWS Secrets Manager Secret which holds the GitHub Personal Access Token for this project.",
-        default: "/my/github/token5" 
+        default: "/my/github/token" 
     })
     //default: `${this.stackName}`
 
